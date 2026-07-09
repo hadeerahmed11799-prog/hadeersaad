@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدير أحمد | مصممة جرافيك ومحررة فيديو</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --baby-pink: #F8C8DC;
+            --baby-pink-light: #FDEEF4;
+            --baby-pink-dark: #E8A0BF;
+            --navy: #1B2A4A;
+            --navy-light: #2C3E6B;
+            --white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --gray: #6B7280;
+            --dark: #1F2937;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Cairo', 'Poppins', sans-serif;
+            background: var(--off-white);
+            color: var(--dark);
+            overflow-x: hidden;
+            direction: rtl;
+        }
+        body[dir="ltr"] { direction: ltr; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--baby-pink-light); }
+        ::-webkit-scrollbar-thumb { background: var(--baby-pink-dark); border-radius: 10px; }
+        .cursor-dot {
+            width: 12px; height: 12px;
+            background: var(--baby-pink-dark);
+            border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        .cursor-outline {
+            width: 40px; height: 40px;
+            border: 2px solid var(--baby-pink);
+            border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 9998;
+            transition: transform 0.15s ease, opacity 0.15s;
+        }
+        .nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 1rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(248,200,220,0.3);
+            transition: all 0.4s ease;
+        }
+        .nav.scrolled {
+            padding: 0.6rem 3rem;
+            box-shadow: 0 4px 30px rgba(27,42,74,0.08);
+        }
+        .logo {
+            font-size: 1.8rem; font-weight: 900;
+            color: var(--navy);
+            text-decoration: none;
+            position: relative;
+        }
+        .logo span { color: var(--baby-pink-dark); }
+        .logo::after {
+            content: ''; position: absolute; bottom: -4px; left: 0;
+            width: 0; height: 3px; background: var(--baby-pink);
+            border-radius: 2px; transition: width 0.4s ease;
+        }
+        .logo:hover::after { width: 100%; }
+        .nav-links {
+            display: flex; gap: 2.5rem; list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none; color: var(--navy);
+            font-weight: 600; font-size: 0.95rem;
+            position: relative; padding: 0.3rem 0;
+            transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 0; left: 50%;
+            width: 0; height: 2px; background: var(--baby-pink-dark);
+            border-radius: 2px; transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-links a:hover { color: var(--baby-pink-dark); }
+        .nav-links a:hover::after { width: 100%; }
+        .lang-switch {
+            background: var(--baby-pink-light);
+            border: 2px solid var(--baby-pink);
+            color: var(--navy);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 700; cursor: pointer;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        .lang-switch:hover {
+            background: var(--baby-pink);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+        .mobile-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; padding: 5px;
+        }
+        .mobile-toggle span {
+            width: 28px; height: 3px;
+            background: var(--navy);
+            border-radius: 3px; transition: all 0.3s ease;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative; overflow: hidden;
+            background: linear-gradient(135deg, var(--white) 0%, var(--baby-pink-light) 50%, var(--white) 100%);
+        }
+        .hero-bg-shapes {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none; overflow: hidden;
+        }
+        .shape {
+            position: absolute; border-radius: 50%;
+            background: linear-gradient(135deg, var(--baby-pink), transparent);
+            opacity: 0.4; animation: float 8s ease-in-out infinite;
+        }
+        .shape:nth-child(1) { width: 400px; height: 400px; top: -100px; right: -100px; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 300px; height: 300px; bottom: -50px; left: -50px; animation-delay: 2s; }
+        .shape:nth-child(3) { width: 200px; height: 200px; top: 40%; right: 20%; animation-delay: 4s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+        .hero-content {
+            max-width: 700px; z-index: 2;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--baby-pink-light);
+            color: var(--navy);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 700; font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--baby-pink);
+            animation: fadeInUp 0.8s ease;
+        }
+        .hero h1 {
+            font-size: 3.5rem; font-weight: 900;
+            color: var(--navy); line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .hero h1 .highlight {
+            color: var(--baby-pink-dark);
+            position: relative;
+            display: inline-block;
+        }
+        .hero h1 .highlight::after {
+            content: ''; position: absolute; bottom: 5px; left: 0; right: 0;
+            height: 12px; background: var(--baby-pink);
+            opacity: 0.4; border-radius: 4px; z-index: -1;
+        }
+        .hero-desc {
+            font-size: 1.2rem; color: var(--gray);
+            line-height: 1.8; margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .hero-btns {
+            display: flex; gap: 1rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px; font-weight: 700;
+            font-size: 1rem; cursor: pointer;
+            font-family: inherit; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+        .btn-primary {
+            background: var(--navy); color: var(--white);
+            box-shadow: 0 10px 30px rgba(27,42,74,0.3);
+        }
+        .btn-primary:hover {
+            background: var(--navy-light);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(27,42,74,0.4);
+        }
+        .btn-secondary {
+            background: transparent; color: var(--navy);
+            border: 2px solid var(--baby-pink-dark);
+        }
+        .btn-secondary:hover {
+            background: var(--baby-pink);
+            border-color: var(--baby-pink);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+        .hero-visual {
+            position: absolute; right: 5%; top: 50%;
+            transform: translateY(-50%);
+            width: 450px; height: 450px;
+            z-index: 1;
+        }
+        .hero-circle {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--baby-pink) 0%, var(--baby-pink-light) 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            animation: pulse-glow 3s ease-in-out infinite;
+            box-shadow: 0 20px 60px rgba(248,200,220,0.5);
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(248,200,220,0.5); }
+            50% { box-shadow: 0 30px 80px rgba(248,200,220,0.7); }
+        }
+        .hero-avatar {
+            width: 90%; height: 90%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--white);
+        }
+        .floating-icons {
+            position: absolute; width: 100%; height: 100%;
+        }
+        .f-icon {
+            position: absolute;
+            width: 50px; height: 50px;
+            background: var(--white);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(27,42,74,0.1);
+            animation: orbit 6s linear infinite;
+        }
+        .f-icon:nth-child(1) { top: 0; left: 50%; animation-delay: 0s; }
+        .f-icon:nth-child(2) { bottom: 20%; left: 0; animation-delay: 2s; }
+        .f-icon:nth-child(3) { bottom: 20%; right: 0; animation-delay: 4s; }
+        @keyframes orbit {
+            0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+        }
+        .stats-bar {
+            background: var(--navy);
+            padding: 3rem 5%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative; overflow: hidden;
+        }
+        .stats-bar::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: linear-gradient(90deg, var(--baby-pink), var(--baby-pink-dark), var(--baby-pink));
+        }
+        .stat-item {
+            text-align: center; color: var(--white);
+            position: relative; z-index: 1;
+        }
+        .stat-number {
+            font-size: 2.5rem; font-weight: 900;
+            color: var(--baby-pink);
+            display: block; margin-bottom: 0.5rem;
+        }
+        .stat-label {
+            font-size: 0.95rem; opacity: 0.8;
+        }
+        .section {
+            padding: 6rem 5%;
+            position: relative;
+        }
+        .section-header {
+            text-align: center; margin-bottom: 4rem;
+        }
+        .section-tag {
+            display: inline-block;
+            background: var(--baby-pink-light);
+            color: var(--navy);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700; font-size: 0.85rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--baby-pink);
+        }
+        .section-title {
+            font-size: 2.5rem; font-weight: 900;
+            color: var(--navy); margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            color: var(--gray); font-size: 1.1rem;
+            max-width: 600px; margin: 0 auto;
+        }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .about-img-wrapper {
+            position: relative;
+        }
+        .about-img {
+            width: 100%; max-width: 450px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(27,42,74,0.15);
+            position: relative; z-index: 2;
+        }
+        .about-img-bg {
+            position: absolute; top: 30px; right: -30px;
+            width: 100%; height: 100%;
+            border: 3px solid var(--baby-pink);
+            border-radius: 30px; z-index: 1;
+        }
+        .about-text h3 {
+            font-size: 2rem; color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        .about-text p {
+            color: var(--gray); line-height: 1.8;
+            margin-bottom: 1.5rem; font-size: 1.05rem;
+        }
+        .skills-tags {
+            display: flex; flex-wrap: wrap; gap: 0.8rem;
+            margin-top: 2rem;
+        }
+        .skill-tag {
+            background: var(--baby-pink-light);
+            color: var(--navy);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600; font-size: 0.9rem;
+            border: 1px solid var(--baby-pink);
+            transition: all 0.3s ease;
+        }
+        .skill-tag:hover {
+            background: var(--baby-pink);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+        .services-section {
+            background: linear-gradient(180deg, var(--white) 0%, var(--baby-pink-light) 100%);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .service-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            border: 1px solid rgba(248,200,220,0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
+        }
+        .service-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 4px; background: var(--baby-pink);
+            transform: scaleX(0); transition: transform 0.4s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(27,42,74,0.1);
+            border-color: var(--baby-pink);
+        }
+        .service-icon {
+            width: 80px; height: 80px;
+            background: var(--baby-pink-light);
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem; margin: 0 auto 1.5rem;
+            transition: all 0.4s ease;
+        }
+        .service-card:hover .service-icon {
+            background: var(--baby-pink);
+            transform: scale(1.1) rotate(5deg);
+        }
+        .service-card h3 {
+            font-size: 1.3rem; color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        .service-card p {
+            color: var(--gray); line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .portfolio-item {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(27,42,74,0.1);
+        }
+        .portfolio-item img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .portfolio-item:hover img { transform: scale(1.15); }
+        .portfolio-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(27,42,74,0.9) 100%);
+            display: flex; flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+        .portfolio-overlay h4 {
+            color: var(--white); font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            transform: translateY(20px);
+            transition: transform 0.4s ease 0.1s;
+        }
+        .portfolio-overlay span {
+            color: var(--baby-pink); font-weight: 600;
+            font-size: 0.9rem;
+            transform: translateY(20px);
+            transition: transform 0.4s ease 0.2s;
+        }
+        .portfolio-item:hover .portfolio-overlay h4,
+        .portfolio-item:hover .portfolio-overlay span {
+            transform: translateY(0);
+        }
+        .testimonials-section {
+            background: var(--navy);
+            color: var(--white);
+            position: relative; overflow: hidden;
+        }
+        .testimonials-section .section-title,
+        .testimonials-section .section-subtitle { color: var(--white); }
+        .testimonials-section .section-tag {
+            background: rgba(248,200,220,0.2);
+            color: var(--baby-pink); border-color: var(--baby-pink);
+        }
+        .testimonials-slider {
+            max-width: 800px; margin: 0 auto;
+            position: relative;
+        }
+        .testimonial-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(248,200,220,0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .testimonial-text {
+            font-size: 1.2rem; line-height: 1.8;
+            margin-bottom: 2rem; font-style: italic;
+            color: rgba(255,255,255,0.9);
+        }
+        .testimonial-author {
+            display: flex; align-items: center;
+            justify-content: center; gap: 1rem;
+        }
+        .testimonial-avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--baby-pink);
+        }
+        .testimonial-info h4 {
+            color: var(--baby-pink); font-size: 1.1rem;
+        }
+        .testimonial-info span {
+            color: rgba(255,255,255,0.6); font-size: 0.9rem;
+        }
+        .contact-section {
+            background: linear-gradient(180deg, var(--baby-pink-light) 0%, var(--white) 100%);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1100px; margin: 0 auto;
+        }
+        .contact-info h3 {
+            font-size: 2rem; color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+        .contact-info p {
+            color: var(--gray); line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        .contact-item {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .contact-icon {
+            width: 50px; height: 50px;
+            background: var(--baby-pink-light);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; color: var(--navy);
+            transition: all 0.3s ease;
+        }
+        .contact-item:hover .contact-icon {
+            background: var(--baby-pink);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+        .contact-item div h4 {
+            color: var(--navy); font-size: 1rem;
+            margin-bottom: 0.2rem;
+        }
+        .contact-item div span {
+            color: var(--gray); font-size: 0.9rem;
+        }
+        .contact-form {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(27,42,74,0.08);
+            border: 1px solid rgba(248,200,220,0.3);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            color: var(--navy); font-weight: 600;
+            margin-bottom: 0.5rem; font-size: 0.95rem;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid var(--baby-pink-light);
+            border-radius: 12px;
+            font-family: inherit; font-size: 1rem;
+            color: var(--dark);
+            transition: all 0.3s ease;
+            background: var(--off-white);
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--baby-pink-dark);
+            box-shadow: 0 0 0 4px rgba(248,200,220,0.2);
+        }
+        .form-group textarea {
+            min-height: 140px; resize: vertical;
+        }
+        .footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        .footer-logo {
+            font-size: 2rem; font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        .footer-logo span { color: var(--baby-pink); }
+        .footer-social {
+            display: flex; justify-content: center; gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .footer-social a {
+            width: 45px; height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white); font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(248,200,220,0.3);
+        }
+        .footer-social a:hover {
+            background: var(--baby-pink);
+            border-color: var(--baby-pink);
+            transform: translateY(-3px);
+        }
+        .footer-copy {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1; transform: translateY(0);
+        }
+        .loading-screen {
+            position: fixed; inset: 0; z-index: 10000;
+            background: var(--white);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        .loading-screen.hidden {
+            opacity: 0; visibility: hidden;
+        }
+        .loader {
+            width: 60px; height: 60px;
+            border: 4px solid var(--baby-pink-light);
+            border-top-color: var(--baby-pink-dark);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            margin-top: 1.5rem;
+            color: var(--navy); font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .reels-section {
+            background: linear-gradient(180deg, var(--white) 0%, var(--baby-pink-light) 50%, var(--white) 100%);
+        }
+        .reels-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1000px; margin: 0 auto;
+        }
+        .reel-card {
+            background: var(--white);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(27,42,74,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(248,200,220,0.3);
+        }
+        .reel-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 60px rgba(27,42,74,0.15);
+        }
+        .reel-video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 177.78%;
+            background: var(--navy);
+            overflow: hidden;
+        }
+        .reel-video-wrapper iframe,
+        .reel-video-wrapper video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .reel-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .reel-info h4 {
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .reel-info span {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 1024px) {
+            .hero-visual { width: 350px; height: 350px; right: 2%; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+            .reels-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
+            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-visual { position: relative; right: auto; top: auto; transform: none; margin-top: 3rem; width: 280px; height: 280px; }
+            .hero-btns { justify-content: center; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .reels-grid { grid-template-columns: 1fr; }
+            .f-icon { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text" data-ar="جارٍ التحميل..." data-en="Loading...">جارٍ التحميل...</div>
+    </div>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-outline" id="cursorOutline"></div>
+
+    <nav class="nav" id="navbar">
+        <a href="#" class="logo">Hadeer<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="#home" data-ar="الرئيسية" data-en="Home">الرئيسية</a></li>
+            <li><a href="#about" data-ar="عني" data-en="About">عني</a></li>
+            <li><a href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a></li>
+            <li><a href="#portfolio" data-ar="أعمالي" data-en="Portfolio">أعمالي</a></li>
+            <li><a href="#reels" data-ar="الريلز" data-en="Reels">الريلز</a></li>
+            <li><a href="#contact" data-ar="تواصل" data-en="Contact">تواصل</a></li>
+        </ul>
+        <button class="lang-switch" id="langSwitch" onclick="toggleLang()">English</button>
+        <div class="mobile-toggle" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="hero-bg-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge" data-ar="مرحباً، أنا هدير أحمد 👋" data-en="Hi, I'm Hadeer Ahmed 👋">مرحباً، أنا هدير أحمد 👋</div>
+            <h1>
+                <span data-ar="مصممة جرافيك" data-en="Graphic Designer">مصممة جرافيك</span> & <span class="highlight" data-ar="محررة فيديو" data-en="Video Editor">محررة فيديو</span>
+                <br><span data-ar="ومصممة بالذكاء الاصطناعي" data-en="& AI Designer">ومصممة بالذكاء الاصطناعي</span>
+            </h1>
+            <p class="hero-desc" data-ar="أنشئ محتوى بصرياً يجمع بين الإبداع والتقنية، متخصصة في تصاميم السوشيال ميديا والبراندنج، المطبوعات، التصاميم المدعومة بالذكاء الاصطناعي، المونتاج الاحترافي، إدارة المواقع باستخدام وورد بريس، وإنشاء المواقع باستخدام الذكاء الاصطناعي." data-en="I create visual content that blends creativity with technology, specializing in social media designs, branding, print designs, AI-powered designs, professional video editing, website management using WordPress, and AI website creation.">
+                أنشئ محتوى بصرياً يجمع بين الإبداع والتقنية، متخصصة في تصاميم السوشيال ميديا والبراندنج، المطبوعات، التصاميم المدعومة بالذكاء الاصطناعي، المونتاج الاحترافي، إدارة المواقع باستخدام وورد بريس، وإنشاء المواقع باستخدام الذكاء الاصطناعي.
+            </p>
+            <div class="hero-btns">
+                <a href="#portfolio" class="btn btn-primary" data-ar="شاهد أعمالي" data-en="View My Work">شاهد أعمالي</a>
+                <a href="#contact" class="btn btn-secondary" data-ar="تواصل معي" data-en="Contact Me">تواصل معي</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-circle">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/profile.png" alt="Hadeer Ahmed" class="hero-avatar">
+                <div class="floating-icons">
+                    <div class="f-icon">🎬</div>
+                    <div class="f-icon">🎨</div>
+                    <div class="f-icon">✨</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span class="stat-number" data-count="20">0</span>
+            <span class="stat-label" data-ar="مشروع منجز" data-en="Projects Done">مشروع منجز</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="10">0</span>
+            <span class="stat-label" data-ar="عميل سعيد" data-en="Happy Clients">عميل سعيد</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="1">0</span>
+            <span class="stat-label" data-ar="سنوات خبرة" data-en="Years Experience">سنوات خبرة</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="100">0</span>
+            <span class="stat-label" data-ar="% رضا العملاء" data-en="% Client Satisfaction">% رضا العملاء</span>
+        </div>
+    </div>
+
+    <section class="section" id="about">
+        <div class="section-header">
+            <div class="section-tag" data-ar="من أنا" data-en="Who I Am">من أنا</div>
+            <h2 class="section-title" data-ar="عني" data-en="About Me">عني</h2>
+            <p class="section-subtitle" data-ar="مصممة شغوفة بصناعة المحتوى البصري الاحترافي" data-en="A passionate designer crafting professional visual content">مصممة شغوفة بصناعة المحتوى البصري الاحترافي</p>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-img-wrapper">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/profile.png" alt="Working" class="about-img">
+                <div class="about-img-bg"></div>
+            </div>
+            <div class="about-text">
+                <h3 data-ar="أحول الأفكار إلى واقع بصري مذهل" data-en="I Turn Ideas Into Stunning Visual Reality">أحول الأفكار إلى واقع بصري مذهل</h3>
+                <p data-ar="أعمل كمصممة جرافيك ومحررة فيديو ومصممة بالذكاء الاصطناعي من الجيزة، مصر. أمتلك خبرة واسعة في إنتاج محتوى بصري احترافي للعلامات التجارية والشركات." data-en="I work as a Graphic Designer, Video Editor & AI Designer from Giza, Egypt. I have extensive experience in producing professional visual content for brands and companies.">
+                    أعمل كمصممة جرافيك ومحررة فيديو ومصممة بالذكاء الاصطناعي من الجيزة، مصر. أمتلك خبرة واسعة في إنتاج محتوى بصري احترافي للعلامات التجارية والشركات.
+                </p>
+                <p data-ar="أتخصص في تصميم حملات السوشيال ميديا، البراندنج، المطبوعات، التصاميم المدعومة بالذكاء الاصطناعي، المونتاج الاحترافي، إدارة المواقع باستخدام وورد بريس، وإنشاء المواقع باستخدام الذكاء الاصطناعي." data-en="I specialize in social media campaign design, branding, print design, AI-powered designs, professional video editing, WordPress website management, and AI website creation.">
+                    أتخصص في تصميم حملات السوشيال ميديا، البراندنج، المطبوعات، التصاميم المدعومة بالذكاء الاصطناعي، المونتاج الاحترافي، إدارة المواقع باستخدام وورد بريس، وإنشاء المواقع باستخدام الذكاء الاصطناعي.
+                </p>
+                <div class="skills-tags">
+                    <span class="skill-tag">Adobe Photoshop</span>
+                    <span class="skill-tag">Adobe Illustrator</span>
+                    <span class="skill-tag">Adobe After Effects</span>
+                    <span class="skill-tag">CapCut Pro</span>
+                    <span class="skill-tag">Motion Graphics</span>
+                    <span class="skill-tag">Social Media</span>
+                    <span class="skill-tag">Print Design</span>
+                    <span class="skill-tag">Branding</span>
+                    <span class="skill-tag">WordPress</span>
+                    <span class="skill-tag">AI Tools</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section services-section" id="services">
+        <div class="section-header">
+            <div class="section-tag" data-ar="ما أقدمه" data-en="What I Offer">ما أقدمه</div>
+            <h2 class="section-title" data-ar="خدماتي" data-en="My Services">خدماتي</h2>
+            <p class="section-subtitle" data-ar="حلول إبداعية شاملة لاحتياجاتك البصرية" data-en="Comprehensive creative solutions for your visual needs">حلول إبداعية شاملة لاحتياجاتك البصرية</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🎨</div>
+                <h3 data-ar="تصميم السوشيال ميديا" data-en="Social Media Design">تصميم السوشيال ميديا</h3>
+                <p data-ar="تصميم حملات إعلانية متكاملة لمنصات التواصل الاجتماعي تزيد من التفاعل وتعزز هوية علامتك التجارية." data-en="Complete advertising campaigns for social media platforms that increase engagement and enhance your brand identity.">تصميم حملات إعلانية متكاملة لمنصات التواصل الاجتماعي تزيد من التفاعل وتعزز هوية علامتك التجارية.</p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">🏢</div>
+                <h3 data-ar="البراندنج" data-en="Branding">البراندنج</h3>
+                <p data-ar="بناء هوية بصرية متكاملة تشمل الشعار، الألوان، الخطوط، وكل العناصر التي تميز علامتك التجارية." data-en="Building a complete visual identity including logo, colors, fonts, and all elements that distinguish your brand.">بناء هوية بصرية متكاملة تشمل الشعار، الألوان، الخطوط، وكل العناصر التي تميز علامتك التجارية.</p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">📄</div>
+                <h3 data-ar="المطبوعات" data-en="Print Design">المطبوعات</h3>
+                <p data-ar="تصاميم إبداعية فريدة للبنرات، البوسترات، البروشورات، والمواد التسويقية المطبوعة بأسلوب عصري وجذاب." data-en="Unique creative designs for banners, posters, brochures, and printed marketing materials in a modern and attractive style.">تصاميم إبداعية فريدة للبنرات، البوسترات، البروشورات، والمواد التسويقية المطبوعة بأسلوب عصري وجذاب.</p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">🤖</div>
+                <h3 data-ar="التصميم بالذكاء الاصطناعي" data-en="AI-Powered Design">التصميم بالذكاء الاصطناعي</h3>
+                <p data-ar="تصاميم ثورية باستخدام أحدث أدوات الذكاء الاصطناعي لإنتاج صور وفيديوهات ومؤثرات بصرية خارقة." data-en="Revolutionary designs using the latest AI tools to produce extraordinary images, videos, and visual effects.">تصاميم ثورية باستخدام أحدث أدوات الذكاء الاصطناعي لإنتاج صور وفيديوهات ومؤثرات بصرية خارقة.</p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">🎬</div>
+                <h3 data-ar="المونتاج الاحترافي" data-en="Professional Video Editing">المونتاج الاحترافي</h3>
+                <p data-ar="مونتاج احترافي بجودة سينمائية مع تأثيرات صوتية وبصرية متقنة لتقديم محتوى فيديو يخطف الأنظار." data-en="Professional cinematic-quality editing with refined audio and visual effects to deliver eye-catching video content.">مونتاج احترافي بجودة سينمائية مع تأثيرات صوتية وبصرية متقنة لتقديم محتوى فيديو يخطف الأنظار.</p>
+            </div>
+
+            <div class="service-card fade-in">
+                <div class="service-icon">🌐</div>
+                <h3 data-ar="إدارة المواقع وإنشاؤها" data-en="Website Management & Creation">إدارة المواقع وإنشاؤها</h3>
+                <p data-ar="إدارة المواقع باستخدام وورد بريس وإنشاء مواقع احترافية باستخدام أحدث تقنيات الذكاء الاصطناعي." data-en="Website management using WordPress and professional website creation using the latest AI technologies.">إدارة المواقع باستخدام وورد بريس وإنشاء مواقع احترافية باستخدام أحدث تقنيات الذكاء الاصطناعي.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="portfolio">
+        <div class="section-header">
+            <div class="section-tag" data-ar="معرض الأعمال" data-en="Portfolio">معرض الأعمال</div>
+            <h2 class="section-title" data-ar="أعمالي المختارة" data-en="Selected Works">أعمالي المختارة</h2>
+            <p class="section-subtitle" data-ar="نظرة على بعض المشاريع التي قمت بتنفيذها" data-en="A look at some of the projects I've executed">نظرة على بعض المشاريع التي قمت بتنفيذها</p>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project1-led.png" alt="LED Campaign">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة إضاءة LED" data-en="LED Lighting Campaign">حملة إضاءة LED</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project2-real-estat.png" alt="Extreme Real Estate">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة إكستريم العقارية" data-en="Extreme Real Estate Campaign">حملة إكستريم العقارية</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project3-tourism.png" alt="Al Mariam Tourism">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة المريم للسياحة" data-en="Al Mariam Tourism Campaign">حملة المريم للسياحة</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project4-hijir.png" alt="Hijri New Year">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة رأس السنة الهجرية" data-en="Hijri New Year Campaign">حملة رأس السنة الهجرية</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project5-rivera.png" alt="Rivera">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة ريفيرا" data-en="Rivera Campaign">حملة ريفيرا</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+
+            <div class="portfolio-item fade-in">
+                <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/project6smile%20art.png" alt="Smile Art">
+                <div class="portfolio-overlay">
+                    <h4 data-ar="حملة سمايل آرت" data-en="Smile Art Campaign">حملة سمايل آرت</h4>
+                    <span data-ar="تصميم سوشيال ميديا" data-en="Social Media Design">تصميم سوشيال ميديا</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reels Section -->
+    <section class="section reels-section" id="reels">
+        <div class="section-header">
+            <div class="section-tag" data-ar="الريلز" data-en="Reels">الريلز</div>
+            <h2 class="section-title" data-ar="فيديوهاتي القصيرة" data-en="My Short Videos">فيديوهاتي القصيرة</h2>
+            <p class="section-subtitle" data-ar="محتوى فيديو احترافي لمنصات التواصل الاجتماعي" data-en="Professional video content for social media platforms">محتوى فيديو احترافي لمنصات التواصل الاجتماعي</p>
+        </div>
+
+        <div class="reels-grid">
+            <div class="reel-card fade-in">
+                <div class="reel-video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/Ph5SUsyIsVg" 
+                        title="Smile Art - Dental Reel"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="reel-info">
+                    <h4 data-ar="سمايل آرت - عيادة أسنان" data-en="Smile Art - Dental Clinic">سمايل آرت - عيادة أسنان</h4>
+                    <span data-ar="ريلز تسويقي" data-en="Marketing Reel">ريلز تسويقي</span>
+                </div>
+            </div>
+
+            <div class="reel-card fade-in">
+                <div class="reel-video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/7WZEVd8OiYQ" 
+                        title="Hijri New Year Reel"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="reel-info">
+                    <h4 data-ar="رأس السنة الهجرية" data-en="Hijri New Year">رأس السنة الهجرية</h4>
+                    <span data-ar="ريلز مناسبة" data-en="Occasion Reel">ريلز مناسبة</span>
+                </div>
+            </div>
+
+            <div class="reel-card fade-in">
+                <div class="reel-video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/v72kGprKLTs" 
+                        title="Real Estate Development Reel"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="reel-info">
+                    <h4 data-ar="تطوير عقاري" data-en="Real Estate Development">تطوير عقاري</h4>
+                    <span data-ar="ريلز عقاري" data-en="Real Estate Reel">ريلز عقاري</span>
+                </div>
+            </div>
+
+            <div class="reel-card fade-in">
+                <div class="reel-video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/02LSOqJuUI0" 
+                        title="New Partnership Reel"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="reel-info">
+                    <h4 data-ar="شراكة جديدة" data-en="New Partnership">شراكة جديدة</h4>
+                    <span data-ar="ريلز إعلاني" data-en="Promotional Reel">ريلز إعلاني</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials-section" id="testimonials">
+        <div class="section-header">
+            <div class="section-tag" data-ar="آراء العملاء" data-en="Client Reviews">آراء العملاء</div>
+            <h2 class="section-title" data-ar="ماذا يقول عملائي" data-en="What My Clients Say">ماذا يقول عملائي</h2>
+            <p class="section-subtitle" data-ar="تجارب حقيقية من عملاء حقيقيين" data-en="Real experiences from real clients">تجارب حقيقية من عملاء حقيقيين</p>
+        </div>
+
+        <div class="testimonials-slider">
+            <div class="testimonial-card fade-in">
+                <div style="margin-bottom: 2rem;">
+                    <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeer-portfolio/main/Untitled-1.png" alt="Client Reviews" style="width: 100%; max-width: 500px; border-radius: 16px; margin: 0 auto; display: block;">
+                </div>
+                <p class="testimonial-text" data-ar="" data-en="Hadeer delivered exceptional work for our social media campaigns. Her creativity and attention to detail are unmatched. Highly recommended!">تعمل هدير بشكل استثنائي في حملات السوشيال ميديا الخاصة بنا. إبداعها واهتمامها بالتفاصيل لا مثيل لهما. أوصي بها بشدة!</p>
+                <div class="testimonial-author">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Client" class="testimonial-avatar">
+                    <div class="testimonial-info">
+                        <h4 data-ar="أحمد محمود" data-en="Ahmed Mahmoud">أحمد محمود</h4>
+                        <span data-ar="مدير تسويق - إيمرالد للإضاءة" data-en="Marketing Manager - Emerald Lighting">مدير تسويق - إيمرالد للإضاءة</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+        <div class="section-header">
+            <div class="section-tag" data-ar="لنبدأ مشروعاً" data-en="Let's Start a Project">لنبدأ مشروعاً</div>
+            <h2 class="section-title" data-ar="تواصل معي" data-en="Get In Touch">تواصل معي</h2>
+            <p class="section-subtitle" data-ar="جاهزة لتحويل رؤيتك إلى واقع بصري مذهل" data-en="Ready to turn your vision into stunning visual reality">جاهزة لتحويل رؤيتك إلى واقع بصري مذهل</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3 data-ar="لنتحدث عن مشروعك" data-en="Let's Talk About Your Project">لنتحدث عن مشروعك</h3>
+                <p data-ar="سواء كنت تحتاج حملة سوشيال ميديا، براندنج، مطبوعات، أو تصاميم إبداعية، أنا هنا لمساعدتك في تحقيق أهدافك البصرية." data-en="Whether you need a social media campaign, branding, print designs, or creative designs, I'm here to help you achieve your visual goals.">
+                    سواء كنت تحتاج حملة سوشيال ميديا، براندنج، مطبوعات، أو تصاميم إبداعية، أنا هنا لمساعدتك في تحقيق أهدافك البصرية.
+                </p>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <h4 data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</h4>
+                        <span>Dodolinkedin11799@gmail.com</span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📱</div>
+                    <div>
+                        <h4 data-ar="الهاتف" data-en="Phone">الهاتف</h4>
+                        <span>01023541034</span>
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4 data-ar="الموقع" data-en="Location">الموقع</h4>
+                        <span data-ar="الجيزة، مصر" data-en="Giza, Egypt">الجيزة، مصر</span>
+                    </div>
+                </div>
+            </div>
+
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك! سأتواصل معك قريباً.');">
+                <div class="form-group">
+                    <label data-ar="الاسم" data-en="Name">الاسم</label>
+                    <input type="text" placeholder="" data-placeholder-ar="اسمك الكريم" data-placeholder-en="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
+                    <input type="email" placeholder="" data-placeholder-ar="بريدك الإلكتروني" data-placeholder-en="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <label data-ar="الموضوع" data-en="Subject">الموضوع</label>
+                    <input type="text" placeholder="" data-placeholder-ar="موضوع الرسالة" data-placeholder-en="Message Subject" required>
+                </div>
+                <div class="form-group">
+                    <label data-ar="الرسالة" data-en="Message">الرسالة</label>
+                    <textarea placeholder="" data-placeholder-ar="اكتب رسالتك هنا..." data-placeholder-en="Write your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-ar="إرسال الرسالة 📨" data-en="Send Message 📨">إرسال الرسالة 📨</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo">Hadeer<span>.</span></div>
+        <p data-ar="مصممة جرافيك | محررة فيديو | مصممة AI" data-en="Graphic Designer | Video Editor | AI Designer">مصممة جرافيك | محررة فيديو | مصممة AI</p>
+        <div class="footer-social">
+            <a href="https://www.behance.net/hadeerahmed65" target="_blank" title="Behance">Be</a>
+            <a href="https://www.linkedin.com/in/hadeer-ahmed-490697388" target="_blank" title="LinkedIn">in</a>
+            <a href="https://maps.app.goo.gl/kUeHx6XNa7tWwxqQ8" target="_blank" title="Google Maps">📍</a>
+        </div>
+        <div class="footer-copy" data-ar="© 2026 هدير أحمد. جميع الحقوق محفوظة." data-en="© 2026 Hadeer Ahmed. All Rights Reserved.">© 2026 هدير أحمد. جميع الحقوق محفوظة.</div>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').classList.add('hidden');
+            }, 1500);
+        });
+
+        let currentLang = 'ar';
+        function toggleLang() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.body.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langSwitch').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+
+            document.querySelectorAll('[data-ar][data-en]').forEach(el => {
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = el.getAttribute('data-placeholder-' + currentLang) || '';
+                } else {
+                    el.textContent = el.getAttribute('data-' + currentLang);
+                }
+            });
+        }
+
+        const cursorDot = document.getElementById('cursorDot');
+        const cursorOutline = document.getElementById('cursorOutline');
+
+        window.addEventListener('mousemove', (e) => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            cursorOutline.style.left = e.clientX + 'px';
+            cursorOutline.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .portfolio-item, .service-card, .reel-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorOutline.style.borderColor = 'var(--baby-pink-dark)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorOutline.style.borderColor = 'var(--baby-pink)';
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.stat-number');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        let current = 0;
+                        const increment = target / 50;
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                counter.textContent = target + (counter.parentElement.textContent.includes('%') ? '%' : '+');
+                                clearInterval(timer);
+                            } else {
+                                counter.textContent = Math.floor(current) + (counter.parentElement.textContent.includes('%') ? '%' : '+');
+                            }
+                        }, 30);
+                    });
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counterObserver.observe(document.querySelector('.stats-bar'));
+
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'rgba(255,255,255,0.95)';
+            navLinks.style.padding = '2rem';
+            navLinks.style.backdropFilter = 'blur(20px)';
+            navLinks.style.boxShadow = '0 10px 30px rgba(27,42,74,0.1)';
+            navLinks.style.gap = '1.5rem';
+        }
+    </script>
+</body>
+</html>
