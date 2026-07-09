@@ -776,48 +776,67 @@
             z-index: 2;
         }
 /* RTL Hero Fix */
-html[dir="rtl"], body[dir="rtl"] .hero {
-    flex-direction: row-reverse;
-}
-html[dir="rtl"], body[dir="rtl"] .hero-content {
-    margin-left: 0;
-    margin-right: auto;
-    padding-left: 0;
-    padding-right: 520px;
-    text-align: right;
-}
-html[dir="rtl"], body[dir="rtl"] .hero-visual {
-    right: auto;
-    left: 5%;
-}
-html[dir="rtl"], body[dir="rtl"] .hero-btns {
-    justify-content: flex-start;
-}
+
+
+
+
 @media (max-width: 1024px) {
-    html[dir="rtl"], body[dir="rtl"] .hero-content {
-        padding-right: 400px;
-    }
-    html[dir="rtl"], body[dir="rtl"] .hero-visual {
-        left: 2%;
-    }
+    
+    
 }
 @media (max-width: 768px) {
-    html[dir="rtl"], body[dir="rtl"] .hero {
-        flex-direction: column;
-    }
-    html[dir="rtl"], body[dir="rtl"] .hero-content {
-        padding-right: 0;
+    
+    
+    
+    
+}/* RTL Text Direction Only - Layout stays LTR */
+html[dir="rtl"] body {
+    direction: rtl;
+}
+html[dir="rtl"] .hero-content {
+    text-align: right;
+}
+html[dir="rtl"] .hero-btns {
+    justify-content: flex-start;
+}
+html[dir="rtl"] .hero h1 {
+    text-align: right;
+}
+html[dir="rtl"] .hero-desc {
+    text-align: right;
+}
+@media (max-width: 768px) {
+    html[dir="rtl"] .hero-content,
+    html[dir="rtl"] .hero h1,
+    html[dir="rtl"] .hero-desc {
         text-align: center;
     }
-    html[dir="rtl"], body[dir="rtl"] .hero-btns {
+    html[dir="rtl"] .hero-btns {
         justify-content: center;
     }
-    html[dir="rtl"], body[dir="rtl"] .hero-visual {
-        position: relative;
-        left: auto;
-        margin-top: 3rem;
+}
+/* RTL - Layout stays same as English, only text direction changes */
+html[dir="rtl"] .hero-content {
+    text-align: right;
+}
+html[dir="rtl"] .hero h1 {
+    text-align: right;
+}
+html[dir="rtl"] .hero-desc {
+    text-align: right;
+}
+html[dir="rtl"] .hero-badge {
+    text-align: right;
+}
+@media (max-width: 768px) {
+    html[dir="rtl"] .hero-content,
+    html[dir="rtl"] .hero h1,
+    html[dir="rtl"] .hero-desc,
+    html[dir="rtl"] .hero-badge {
+        text-align: center;
     }
-}</style>
+}
+</style>
 </head>
 <body>
     <div class="loading-screen" id="loadingScreen">
