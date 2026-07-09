@@ -556,7 +556,9 @@
             box-shadow: 0 0 0 4px rgba(248,200,220,0.2);
         }
         .form-group textarea {
-            min-height: 140px; resize: vertical;
+            min-height: 140px;
+            resize: none;
+            overflow-y: auto;
         }
         .footer {
             background: var(--navy);
@@ -696,7 +698,106 @@
             .reels-grid { grid-template-columns: 1fr; }
             .f-icon { display: none; }
         }
-    </style>
+    
+/* RTL Hero Fix */
+body[dir="rtl"] .hero-visual {
+    right: auto;
+    left: 5%;
+}
+body[dir="rtl"] .hero-content {
+    margin-left: auto;
+    margin-right: 480px;
+}
+@media (max-width: 1024px) {
+    body[dir="rtl"] .hero-content {
+        margin-right: 380px;
+    }
+}
+@media (max-width: 768px) {
+    body[dir="rtl"] .hero-content {
+        margin-right: 0;
+    }
+    body[dir="rtl"] .hero-visual {
+        left: auto;
+        right: auto;
+    }
+}
+
+        .reel-video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 177.78%;
+            background: var(--navy);
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+        .reel-video-wrapper .reel-thumbnail {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .reel-card:hover .reel-thumbnail {
+            transform: scale(1.05);
+        }
+        .reel-play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(27, 42, 74, 0.3);
+            transition: background 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .reel-card:hover .reel-play-overlay {
+            background: rgba(27, 42, 74, 0.5);
+        }
+        .reel-play-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .reel-play-btn::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 22px solid var(--navy);
+            border-top: 14px solid transparent;
+            border-bottom: 14px solid transparent;
+            margin-left: 6px;
+        }
+        .reel-card:hover .reel-play-btn {
+            transform: scale(1.15);
+            background: var(--baby-pink);
+        }
+        .reel-card:hover .reel-play-btn::after {
+            border-left-color: var(--white);
+        }
+        .reel-youtube-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            z-index: 2;
+        }
+</style>
 </head>
 <body>
     <div class="loading-screen" id="loadingScreen">
@@ -927,12 +1028,11 @@
         <div class="reels-grid">
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/Ph5SUsyIsVg" 
-                        title="Smile Art - Dental Reel"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+                    <img src="https://img.youtube.com/vi/02LSOqJuUI0/maxresdefault.jpg" alt="Smile Art - Dental Clinic" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/02LSOqJuUI0/hqdefault.jpg'">
+                    <a href="https://www.youtube.com/shorts/02LSOqJuUI0" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
+                        <div class="reel-play-btn"></div>
+                        <div class="reel-youtube-badge">▶ Shorts</div>
+                    </a>
                 </div>
                 <div class="reel-info">
                     <h4 data-ar="سمايل آرت - عيادة أسنان" data-en="Smile Art - Dental Clinic">سمايل آرت - عيادة أسنان</h4>
@@ -942,12 +1042,11 @@
 
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/7WZEVd8OiYQ" 
-                        title="Hijri New Year Reel"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+                    <img src="https://img.youtube.com/vi/Ph5SUsyIsVg/maxresdefault.jpg" alt="Hijri New Year" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/Ph5SUsyIsVg/hqdefault.jpg'">
+                    <a href="https://www.youtube.com/shorts/Ph5SUsyIsVg" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
+                        <div class="reel-play-btn"></div>
+                        <div class="reel-youtube-badge">▶ Shorts</div>
+                    </a>
                 </div>
                 <div class="reel-info">
                     <h4 data-ar="رأس السنة الهجرية" data-en="Hijri New Year">رأس السنة الهجرية</h4>
@@ -957,12 +1056,11 @@
 
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/v72kGprKLTs" 
-                        title="Real Estate Development Reel"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+                    <img src="https://img.youtube.com/vi/v72kGprKLTs/maxresdefault.jpg" alt="Real Estate Development" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/v72kGprKLTs/hqdefault.jpg'">
+                    <a href="https://www.youtube.com/shorts/v72kGprKLTs" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
+                        <div class="reel-play-btn"></div>
+                        <div class="reel-youtube-badge">▶ Shorts</div>
+                    </a>
                 </div>
                 <div class="reel-info">
                     <h4 data-ar="تطوير عقاري" data-en="Real Estate Development">تطوير عقاري</h4>
@@ -972,12 +1070,11 @@
 
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/02LSOqJuUI0" 
-                        title="New Partnership Reel"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+                    <img src="https://img.youtube.com/vi/7WZEVd8OiYQ/maxresdefault.jpg" alt="New Partnership" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/7WZEVd8OiYQ/hqdefault.jpg'">
+                    <a href="https://www.youtube.com/shorts/7WZEVd8OiYQ" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
+                        <div class="reel-play-btn"></div>
+                        <div class="reel-youtube-badge">▶ Shorts</div>
+                    </a>
                 </div>
                 <div class="reel-info">
                     <h4 data-ar="شراكة جديدة" data-en="New Partnership">شراكة جديدة</h4>
@@ -996,10 +1093,7 @@
 
         <div class="testimonials-slider">
             <div class="testimonial-card fade-in">
-                <div style="margin-bottom: 2rem;">
-                    <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeersaad/main/Untitled-1.png" alt="Client Reviews" style="width: 100%; max-width: 500px; border-radius: 16px; margin: 0 auto; display: block;">
-                </div>
-                <p class="testimonial-text" data-ar="" data-en="Hadeer delivered exceptional work for our social media campaigns. Her creativity and attention to detail are unmatched. Highly recommended!">تعمل هدير بشكل استثنائي في حملات السوشيال ميديا الخاصة بنا. إبداعها واهتمامها بالتفاصيل لا مثيل لهما. أوصي بها بشدة!</p>
+                <p class="testimonial-text" data-ar="تعمل هدير بشكل استثنائي في حملات السوشيال ميديا الخاصة بنا. إبداعها واهتمامها بالتفاصيل لا مثيل لهما. أوصي بها بشدة!" data-en="Hadeer delivered exceptional work for our social media campaigns. Her creativity and attention to detail are unmatched. Highly recommended!">تعمل هدير بشكل استثنائي في حملات السوشيال ميديا الخاصة بنا. إبداعها واهتمامها بالتفاصيل لا مثيل لهما. أوصي بها بشدة!</p>
                 <div class="testimonial-author">
                     <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Client" class="testimonial-avatar">
                     <div class="testimonial-info">
