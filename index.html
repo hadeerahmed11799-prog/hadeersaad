@@ -31,6 +31,31 @@
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--baby-pink-light); }
         ::-webkit-scrollbar-thumb { background: var(--baby-pink-dark); border-radius: 10px; }
+
+        .loading-screen {
+            position: fixed; inset: 0; z-index: 10000;
+            background: var(--white);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s;
+        }
+        .loading-screen.hidden {
+            opacity: 0; visibility: hidden;
+        }
+        .loader {
+            width: 60px; height: 60px;
+            border: 4px solid var(--baby-pink-light);
+            border-top-color: var(--baby-pink-dark);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .loading-text {
+            margin-top: 1.5rem;
+            color: var(--navy); font-weight: 700;
+            font-size: 1.1rem;
+        }
+
         .cursor-dot {
             width: 12px; height: 12px;
             background: var(--baby-pink-dark);
@@ -45,6 +70,7 @@
             position: fixed; pointer-events: none; z-index: 9998;
             transition: transform 0.15s ease, opacity 0.15s;
         }
+
         .nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
             padding: 1rem 3rem;
@@ -112,12 +138,17 @@
             background: var(--navy);
             border-radius: 3px; transition: all 0.3s ease;
         }
+
+        /* HERO: TEXT LEFT, IMAGE RIGHT */
         .hero {
             min-height: 100vh;
-            display: flex; align-items: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 8rem 5% 4rem;
             position: relative; overflow: hidden;
             background: linear-gradient(135deg, var(--white) 0%, var(--baby-pink-light) 50%, var(--white) 100%);
+            gap: 3rem;
         }
         .hero-bg-shapes {
             position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -135,8 +166,12 @@
             0%, 100% { transform: translateY(0) rotate(0deg); }
             50% { transform: translateY(-30px) rotate(10deg); }
         }
+
         .hero-content {
-            max-width: 700px; z-index: 2;
+            max-width: 650px;
+            z-index: 2;
+            text-align: right;
+            flex-shrink: 0;
         }
         .hero-badge {
             display: inline-block;
@@ -150,8 +185,8 @@
             animation: fadeInUp 0.8s ease;
         }
         .hero h1 {
-            font-size: 3.5rem; font-weight: 900;
-            color: var(--navy); line-height: 1.2;
+            font-size: 3.2rem; font-weight: 900;
+            color: var(--navy); line-height: 1.3;
             margin-bottom: 1.5rem;
             animation: fadeInUp 0.8s ease 0.2s both;
         }
@@ -166,7 +201,7 @@
             opacity: 0.4; border-radius: 4px; z-index: -1;
         }
         .hero-desc {
-            font-size: 1.2rem; color: var(--gray);
+            font-size: 1.15rem; color: var(--gray);
             line-height: 1.8; margin-bottom: 2.5rem;
             animation: fadeInUp 0.8s ease 0.4s both;
         }
@@ -202,10 +237,11 @@
             color: var(--white);
             transform: translateY(-3px);
         }
+
         .hero-visual {
-            position: absolute; right: 5%; top: 50%;
-            transform: translateY(-50%);
-            width: 450px; height: 450px;
+            position: relative;
+            width: 420px; height: 420px;
+            flex-shrink: 0;
             z-index: 1;
         }
         .hero-circle {
@@ -229,6 +265,7 @@
         }
         .floating-icons {
             position: absolute; width: 100%; height: 100%;
+            top: 0; left: 0;
         }
         .f-icon {
             position: absolute;
@@ -247,6 +284,7 @@
             0% { transform: rotate(0deg) translateX(180px) rotate(0deg); }
             100% { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
         }
+
         .stats-bar {
             background: var(--navy);
             padding: 3rem 5%;
@@ -271,6 +309,7 @@
         .stat-label {
             font-size: 0.95rem; opacity: 0.8;
         }
+
         .section {
             padding: 6rem 5%;
             position: relative;
@@ -296,6 +335,7 @@
             color: var(--gray); font-size: 1.1rem;
             max-width: 600px; margin: 0 auto;
         }
+
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -344,6 +384,7 @@
             color: var(--white);
             transform: translateY(-2px);
         }
+
         .services-section {
             background: linear-gradient(180deg, var(--white) 0%, var(--baby-pink-light) 100%);
         }
@@ -393,6 +434,7 @@
             color: var(--gray); line-height: 1.7;
             font-size: 0.95rem;
         }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -439,6 +481,7 @@
         .portfolio-item:hover .portfolio-overlay span {
             transform: translateY(0);
         }
+
         .testimonials-section {
             background: var(--navy);
             color: var(--white);
@@ -482,6 +525,7 @@
         .testimonial-info span {
             color: rgba(255,255,255,0.6); font-size: 0.9rem;
         }
+
         .contact-section {
             background: linear-gradient(180deg, var(--baby-pink-light) 0%, var(--white) 100%);
         }
@@ -560,75 +604,7 @@
             resize: none;
             overflow-y: auto;
         }
-        .footer {
-            background: var(--navy);
-            color: var(--white);
-            padding: 3rem 5%;
-            text-align: center;
-        }
-        .footer-logo {
-            font-size: 2rem; font-weight: 900;
-            margin-bottom: 1rem;
-        }
-        .footer-logo span { color: var(--baby-pink); }
-        .footer-social {
-            display: flex; justify-content: center; gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        .footer-social a {
-            width: 45px; height: 45px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--white); font-size: 1.2rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(248,200,220,0.3);
-        }
-        .footer-social a:hover {
-            background: var(--baby-pink);
-            border-color: var(--baby-pink);
-            transform: translateY(-3px);
-        }
-        .footer-copy {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
-            margin-top: 1rem;
-        }
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            opacity: 0; transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        .fade-in.visible {
-            opacity: 1; transform: translateY(0);
-        }
-        .loading-screen {
-            position: fixed; inset: 0; z-index: 10000;
-            background: var(--white);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s;
-        }
-        .loading-screen.hidden {
-            opacity: 0; visibility: hidden;
-        }
-        .loader {
-            width: 60px; height: 60px;
-            border: 4px solid var(--baby-pink-light);
-            border-top-color: var(--baby-pink-dark);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text {
-            margin-top: 1.5rem;
-            color: var(--navy); font-weight: 700;
-            font-size: 1.1rem;
-        }
+
         .reels-section {
             background: linear-gradient(180deg, var(--white) 0%, var(--baby-pink-light) 50%, var(--white) 100%);
         }
@@ -650,57 +626,6 @@
             transform: translateY(-10px);
             box-shadow: 0 25px 60px rgba(27,42,74,0.15);
         }
-        .reel-video-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 177.78%;
-            background: var(--navy);
-            overflow: hidden;
-        }
-        .reel-video-wrapper iframe,
-        .reel-video-wrapper video {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            border: none;
-        }
-        .reel-info {
-            padding: 1.5rem;
-            text-align: center;
-        }
-        .reel-info h4 {
-            color: var(--navy);
-            font-size: 1.1rem;
-            margin-bottom: 0.3rem;
-        }
-        .reel-info span {
-            color: var(--gray);
-            font-size: 0.85rem;
-        }
-        @media (max-width: 1024px) {
-            .hero-visual { width: 350px; height: 350px; right: 2%; }
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-            .reels-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .mobile-toggle { display: flex; }
-            .hero { flex-direction: column; text-align: center; padding-top: 6rem; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero-visual { position: relative; right: auto; top: auto; transform: none; margin-top: 3rem; width: 280px; height: 280px; }
-            .hero-btns { justify-content: center; }
-            .stats-bar { grid-template-columns: repeat(2, 1fr); }
-            .about-grid { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .reels-grid { grid-template-columns: 1fr; }
-            .f-icon { display: none; }
-        }
-    
-
-
         .reel-video-wrapper {
             position: relative;
             width: 100%;
@@ -775,68 +700,101 @@
             gap: 4px;
             z-index: 2;
         }
-/* RTL Hero Fix */
+        .reel-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .reel-info h4 {
+            color: var(--navy);
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .reel-info span {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
 
+        .footer {
+            background: var(--navy);
+            color: var(--white);
+            padding: 3rem 5%;
+            text-align: center;
+        }
+        .footer-logo {
+            font-size: 2rem; font-weight: 900;
+            margin-bottom: 1rem;
+        }
+        .footer-logo span { color: var(--baby-pink); }
+        .footer-social {
+            display: flex; justify-content: center; gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .footer-social a {
+            width: 45px; height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--white); font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(248,200,220,0.3);
+        }
+        .footer-social a:hover {
+            background: var(--baby-pink);
+            border-color: var(--baby-pink);
+            transform: translateY(-3px);
+        }
+        .footer-copy {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
 
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            opacity: 0; transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1; transform: translateY(0);
+        }
 
-
-@media (max-width: 1024px) {
-    
-    
-}
-@media (max-width: 768px) {
-    
-    
-    
-    
-}/* RTL Text Direction Only - Layout stays LTR */
-html[dir="rtl"] body {
-    direction: rtl;
-}
-html[dir="rtl"] .hero-content {
-    text-align: right;
-}
-html[dir="rtl"] .hero-btns {
-    justify-content: flex-start;
-}
-html[dir="rtl"] .hero h1 {
-    text-align: right;
-}
-html[dir="rtl"] .hero-desc {
-    text-align: right;
-}
-@media (max-width: 768px) {
-    html[dir="rtl"] .hero-content,
-    html[dir="rtl"] .hero h1,
-    html[dir="rtl"] .hero-desc {
-        text-align: center;
-    }
-    html[dir="rtl"] .hero-btns {
-        justify-content: center;
-    }
-}
-/* RTL - Layout stays same as English, only text direction changes */
-html[dir="rtl"] .hero-content {
-    text-align: right;
-}
-html[dir="rtl"] .hero h1 {
-    text-align: right;
-}
-html[dir="rtl"] .hero-desc {
-    text-align: right;
-}
-html[dir="rtl"] .hero-badge {
-    text-align: right;
-}
-@media (max-width: 768px) {
-    html[dir="rtl"] .hero-content,
-    html[dir="rtl"] .hero h1,
-    html[dir="rtl"] .hero-desc,
-    html[dir="rtl"] .hero-badge {
-        text-align: center;
-    }
-}
-</style>
+        @media (max-width: 1024px) {
+            .hero { gap: 2rem; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero-visual { width: 350px; height: 350px; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+            .reels-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
+            .hero { 
+                flex-direction: column-reverse; 
+                text-align: center; 
+                padding-top: 6rem;
+                gap: 2rem;
+            }
+            .hero h1 { font-size: 2rem; }
+            .hero-content { text-align: center; max-width: 100%; }
+            .hero-btns { justify-content: center; }
+            .hero-visual { 
+                position: relative; 
+                width: 260px; height: 260px; 
+            }
+            .f-icon { display: none; }
+            .stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .about-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .reels-grid { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <div class="loading-screen" id="loadingScreen">
@@ -871,7 +829,7 @@ html[dir="rtl"] .hero-badge {
         </div>
 
         <div class="hero-content">
-            <div class="hero-badge" data-ar="مرحباً، أنا هدير أحمد 👋" data-en="Hi, I'm Hadeer Ahmed 👋">مرحباً، أنا هدير أحمد 👋</div>
+            <div class="hero-badge" data-ar="مرحباً، أنا هدير أحمد" data-en="Hi, I am Hadeer Ahmed">مرحباً، أنا هدير أحمد</div>
             <h1>
                 <span data-ar="مصممة جرافيك" data-en="Graphic Designer">مصممة جرافيك</span> & <span class="highlight" data-ar="محررة فيديو" data-en="Video Editor">محررة فيديو</span>
                 <br><span data-ar="ومصممة بالذكاء الاصطناعي" data-en="& AI Designer">ومصممة بالذكاء الاصطناعي</span>
@@ -889,9 +847,9 @@ html[dir="rtl"] .hero-badge {
             <div class="hero-circle">
                 <img src="https://raw.githubusercontent.com/hadeerahmed11799-prog/hadeersaad/main/profile.png" alt="Hadeer Ahmed" class="hero-avatar">
                 <div class="floating-icons">
-                    <div class="f-icon">🎬</div>
-                    <div class="f-icon">🎨</div>
-                    <div class="f-icon">✨</div>
+                    <div class="f-icon">&#127916;</div>
+                    <div class="f-icon">&#127912;</div>
+                    <div class="f-icon">&#10024;</div>
                 </div>
             </div>
         </div>
@@ -961,37 +919,37 @@ html[dir="rtl"] .hero-badge {
 
         <div class="services-grid">
             <div class="service-card fade-in">
-                <div class="service-icon">🎨</div>
+                <div class="service-icon">&#127912;</div>
                 <h3 data-ar="تصميم السوشيال ميديا" data-en="Social Media Design">تصميم السوشيال ميديا</h3>
                 <p data-ar="تصميم حملات إعلانية متكاملة لمنصات التواصل الاجتماعي تزيد من التفاعل وتعزز هوية علامتك التجارية." data-en="Complete advertising campaigns for social media platforms that increase engagement and enhance your brand identity.">تصميم حملات إعلانية متكاملة لمنصات التواصل الاجتماعي تزيد من التفاعل وتعزز هوية علامتك التجارية.</p>
             </div>
 
             <div class="service-card fade-in">
-                <div class="service-icon">🏢</div>
+                <div class="service-icon">&#127970;</div>
                 <h3 data-ar="البراندنج" data-en="Branding">البراندنج</h3>
                 <p data-ar="بناء هوية بصرية متكاملة تشمل الشعار، الألوان، الخطوط، وكل العناصر التي تميز علامتك التجارية." data-en="Building a complete visual identity including logo, colors, fonts, and all elements that distinguish your brand.">بناء هوية بصرية متكاملة تشمل الشعار، الألوان، الخطوط، وكل العناصر التي تميز علامتك التجارية.</p>
             </div>
 
             <div class="service-card fade-in">
-                <div class="service-icon">📄</div>
+                <div class="service-icon">&#128196;</div>
                 <h3 data-ar="المطبوعات" data-en="Print Design">المطبوعات</h3>
                 <p data-ar="تصاميم إبداعية فريدة للبنرات، البوسترات، البروشورات، والمواد التسويقية المطبوعة بأسلوب عصري وجذاب." data-en="Unique creative designs for banners, posters, brochures, and printed marketing materials in a modern and attractive style.">تصاميم إبداعية فريدة للبنرات، البوسترات، البروشورات، والمواد التسويقية المطبوعة بأسلوب عصري وجذاب.</p>
             </div>
 
             <div class="service-card fade-in">
-                <div class="service-icon">🤖</div>
+                <div class="service-icon">&#129302;</div>
                 <h3 data-ar="التصميم بالذكاء الاصطناعي" data-en="AI-Powered Design">التصميم بالذكاء الاصطناعي</h3>
                 <p data-ar="تصاميم ثورية باستخدام أحدث أدوات الذكاء الاصطناعي لإنتاج صور وفيديوهات ومؤثرات بصرية خارقة." data-en="Revolutionary designs using the latest AI tools to produce extraordinary images, videos, and visual effects.">تصاميم ثورية باستخدام أحدث أدوات الذكاء الاصطناعي لإنتاج صور وفيديوهات ومؤثرات بصرية خارقة.</p>
             </div>
 
             <div class="service-card fade-in">
-                <div class="service-icon">🎬</div>
+                <div class="service-icon">&#127916;</div>
                 <h3 data-ar="المونتاج الاحترافي" data-en="Professional Video Editing">المونتاج الاحترافي</h3>
                 <p data-ar="مونتاج احترافي بجودة سينمائية مع تأثيرات صوتية وبصرية متقنة لتقديم محتوى فيديو يخطف الأنظار." data-en="Professional cinematic-quality editing with refined audio and visual effects to deliver eye-catching video content.">مونتاج احترافي بجودة سينمائية مع تأثيرات صوتية وبصرية متقنة لتقديم محتوى فيديو يخطف الأنظار.</p>
             </div>
 
             <div class="service-card fade-in">
-                <div class="service-icon">🌐</div>
+                <div class="service-icon">&#127760;</div>
                 <h3 data-ar="إدارة المواقع وإنشاؤها" data-en="Website Management & Creation">إدارة المواقع وإنشاؤها</h3>
                 <p data-ar="إدارة المواقع باستخدام وورد بريس وإنشاء مواقع احترافية باستخدام أحدث تقنيات الذكاء الاصطناعي." data-en="Website management using WordPress and professional website creation using the latest AI technologies.">إدارة المواقع باستخدام وورد بريس وإنشاء مواقع احترافية باستخدام أحدث تقنيات الذكاء الاصطناعي.</p>
             </div>
@@ -1002,7 +960,7 @@ html[dir="rtl"] .hero-badge {
         <div class="section-header">
             <div class="section-tag" data-ar="معرض الأعمال" data-en="Portfolio">معرض الأعمال</div>
             <h2 class="section-title" data-ar="أعمالي المختارة" data-en="Selected Works">أعمالي المختارة</h2>
-            <p class="section-subtitle" data-ar="نظرة على بعض المشاريع التي قمت بتنفيذها" data-en="A look at some of the projects I've executed">نظرة على بعض المشاريع التي قمت بتنفيذها</p>
+            <p class="section-subtitle" data-ar="نظرة على بعض المشاريع التي قمت بتنفيذها" data-en="A look at some of the projects I have executed">نظرة على بعض المشاريع التي قمت بتنفيذها</p>
         </div>
 
         <div class="portfolio-grid">
@@ -1056,7 +1014,6 @@ html[dir="rtl"] .hero-badge {
         </div>
     </section>
 
-    <!-- Reels Section -->
     <section class="section reels-section" id="reels">
         <div class="section-header">
             <div class="section-tag" data-ar="الريلز" data-en="Reels">الريلز</div>
@@ -1067,10 +1024,10 @@ html[dir="rtl"] .hero-badge {
         <div class="reels-grid">
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <img src="https://img.youtube.com/vi/02LSOqJuUI0/maxresdefault.jpg" alt="Smile Art - Dental Clinic" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/02LSOqJuUI0/hqdefault.jpg'">
+                    <img src="https://img.youtube.com/vi/02LSOqJuUI0/maxresdefault.jpg" alt="Smile Art" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/02LSOqJuUI0/hqdefault.jpg'">
                     <a href="https://www.youtube.com/shorts/02LSOqJuUI0" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
                         <div class="reel-play-btn"></div>
-                        <div class="reel-youtube-badge">▶ Shorts</div>
+                        <div class="reel-youtube-badge">Shorts</div>
                     </a>
                 </div>
                 <div class="reel-info">
@@ -1084,7 +1041,7 @@ html[dir="rtl"] .hero-badge {
                     <img src="https://img.youtube.com/vi/Ph5SUsyIsVg/maxresdefault.jpg" alt="Hijri New Year" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/Ph5SUsyIsVg/hqdefault.jpg'">
                     <a href="https://www.youtube.com/shorts/Ph5SUsyIsVg" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
                         <div class="reel-play-btn"></div>
-                        <div class="reel-youtube-badge">▶ Shorts</div>
+                        <div class="reel-youtube-badge">Shorts</div>
                     </a>
                 </div>
                 <div class="reel-info">
@@ -1095,10 +1052,10 @@ html[dir="rtl"] .hero-badge {
 
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <img src="https://img.youtube.com/vi/v72kGprKLTs/maxresdefault.jpg" alt="Real Estate Development" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/v72kGprKLTs/hqdefault.jpg'">
+                    <img src="https://img.youtube.com/vi/v72kGprKLTs/maxresdefault.jpg" alt="Real Estate" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/v72kGprKLTs/hqdefault.jpg'">
                     <a href="https://www.youtube.com/shorts/v72kGprKLTs" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
                         <div class="reel-play-btn"></div>
-                        <div class="reel-youtube-badge">▶ Shorts</div>
+                        <div class="reel-youtube-badge">Shorts</div>
                     </a>
                 </div>
                 <div class="reel-info">
@@ -1109,10 +1066,10 @@ html[dir="rtl"] .hero-badge {
 
             <div class="reel-card fade-in">
                 <div class="reel-video-wrapper">
-                    <img src="https://img.youtube.com/vi/7WZEVd8OiYQ/maxresdefault.jpg" alt="New Partnership" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/7WZEVd8OiYQ/hqdefault.jpg'">
+                    <img src="https://img.youtube.com/vi/7WZEVd8OiYQ/maxresdefault.jpg" alt="Partnership" class="reel-thumbnail" onerror="this.src='https://img.youtube.com/vi/7WZEVd8OiYQ/hqdefault.jpg'">
                     <a href="https://www.youtube.com/shorts/7WZEVd8OiYQ" target="_blank" class="reel-play-overlay" rel="noopener noreferrer">
                         <div class="reel-play-btn"></div>
-                        <div class="reel-youtube-badge">▶ Shorts</div>
+                        <div class="reel-youtube-badge">Shorts</div>
                     </a>
                 </div>
                 <div class="reel-info">
@@ -1159,7 +1116,7 @@ html[dir="rtl"] .hero-badge {
                 </p>
 
                 <div class="contact-item">
-                    <div class="contact-icon">📧</div>
+                    <div class="contact-icon">&#128231;</div>
                     <div>
                         <h4 data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</h4>
                         <span>Dodolinkedin11799@gmail.com</span>
@@ -1167,7 +1124,7 @@ html[dir="rtl"] .hero-badge {
                 </div>
 
                 <div class="contact-item">
-                    <div class="contact-icon">📱</div>
+                    <div class="contact-icon">&#128241;</div>
                     <div>
                         <h4 data-ar="الهاتف" data-en="Phone">الهاتف</h4>
                         <span>01023541034</span>
@@ -1175,7 +1132,7 @@ html[dir="rtl"] .hero-badge {
                 </div>
 
                 <div class="contact-item">
-                    <div class="contact-icon">📍</div>
+                    <div class="contact-icon">&#128205;</div>
                     <div>
                         <h4 data-ar="الموقع" data-en="Location">الموقع</h4>
                         <span data-ar="الجيزة، مصر" data-en="Giza, Egypt">الجيزة، مصر</span>
@@ -1200,7 +1157,7 @@ html[dir="rtl"] .hero-badge {
                     <label data-ar="الرسالة" data-en="Message">الرسالة</label>
                     <textarea placeholder="" data-placeholder-ar="اكتب رسالتك هنا..." data-placeholder-en="Write your message here..." required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-ar="إرسال الرسالة 📨" data-en="Send Message 📨">إرسال الرسالة 📨</button>
+                <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-ar="إرسال الرسالة" data-en="Send Message">إرسال الرسالة</button>
             </form>
         </div>
     </section>
@@ -1211,9 +1168,9 @@ html[dir="rtl"] .hero-badge {
         <div class="footer-social">
             <a href="https://www.behance.net/hadeerahmed65" target="_blank" title="Behance">Be</a>
             <a href="https://www.linkedin.com/in/hadeer-ahmed-490697388" target="_blank" title="LinkedIn">in</a>
-            <a href="https://maps.app.goo.gl/kUeHx6XNa7tWwxqQ8" target="_blank" title="Google Maps">📍</a>
+            <a href="https://maps.app.goo.gl/kUeHx6XNa7tWwxqQ8" target="_blank" title="Google Maps">&#128205;</a>
         </div>
-        <div class="footer-copy" data-ar="© 2026 هدير أحمد. جميع الحقوق محفوظة." data-en="© 2026 Hadeer Ahmed. All Rights Reserved.">© 2026 هدير أحمد. جميع الحقوق محفوظة.</div>
+        <div class="footer-copy" data-ar="2026 هدير أحمد. جميع الحقوق محفوظة." data-en="2026 Hadeer Ahmed. All Rights Reserved.">2026 هدير أحمد. جميع الحقوق محفوظة.</div>
     </footer>
 
     <script>
