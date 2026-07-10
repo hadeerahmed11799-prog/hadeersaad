@@ -1140,23 +1140,25 @@
                 </div>
             </div>
 
-            <form class="contact-form" onsubmit="event.preventDefault(); alert('تم إرسال رسالتك! سأتواصل معك قريباً.');">
+            <form class="contact-form" action="https://formspree.io/f/xwvdgydk" method="POST">
                 <div class="form-group">
                     <label data-ar="الاسم" data-en="Name">الاسم</label>
-                    <input type="text" placeholder="" data-placeholder-ar="اسمك الكريم" data-placeholder-en="Your Name" required>
+                    <input type="text" name="name" placeholder="" data-placeholder-ar="اسمك الكريم" data-placeholder-en="Your Name" required>
                 </div>
                 <div class="form-group">
                     <label data-ar="البريد الإلكتروني" data-en="Email">البريد الإلكتروني</label>
-                    <input type="email" placeholder="" data-placeholder-ar="بريدك الإلكتروني" data-placeholder-en="Your Email" required>
+                    <input type="email" name="email" placeholder="" data-placeholder-ar="بريدك الإلكتروني" data-placeholder-en="Your Email" required>
                 </div>
                 <div class="form-group">
                     <label data-ar="الموضوع" data-en="Subject">الموضوع</label>
-                    <input type="text" placeholder="" data-placeholder-ar="موضوع الرسالة" data-placeholder-en="Message Subject" required>
+                    <input type="text" name="subject" placeholder="" data-placeholder-ar="موضوع الرسالة" data-placeholder-en="Message Subject" required>
                 </div>
                 <div class="form-group">
                     <label data-ar="الرسالة" data-en="Message">الرسالة</label>
-                    <textarea placeholder="" data-placeholder-ar="اكتب رسالتك هنا..." data-placeholder-en="Write your message here..." required></textarea>
+                    <textarea name="message" placeholder="" data-placeholder-ar="اكتب رسالتك هنا..." data-placeholder-en="Write your message here..." required></textarea>
                 </div>
+                <input type="hidden" name="_replyto" value="Dodolinkedin11799@gmail.com">
+                <input type="hidden" name="_subject" value="رسالة جديدة من موقع Portfolio">
                 <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;" data-ar="إرسال الرسالة" data-en="Send Message">إرسال الرسالة</button>
             </form>
         </div>
